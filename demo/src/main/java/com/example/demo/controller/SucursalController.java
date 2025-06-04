@@ -18,21 +18,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/sucursales")
+@CrossOrigin(origins = "http://localhost:4200/", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class SucursalController {
     
     @Autowired
     private SucursalRepository sucursalRepository;
 
+    @CrossOrigin(origins = "http://localhost:4200/")
     @GetMapping
     public List<SucursalDTO> getAllSucursals(){
         List<Sucursal> sucursales = sucursalRepository.findAll();
@@ -86,6 +91,32 @@ public ResponseEntity<SucursalDTO> getSucursalById(@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedSucursal);
         
     }
+
+    //Endpoint para actualizar la Sucursal
+   
+     @PutMapping("/{id}")
+     public ResponseEntity<SucursalDTO> updateSucursal(@PathVariable Integer id, @RequestBody SucursalDTO sucursalDTO){
+        Optional<Sucursal> existingSucursal = sucursalRepository.findById(id);
+        if(existingSucursal.isPresent()){
+            Sucursal sucursal = existingSucursal.get();
+            //Actualizando los campos que se desean
+            sucursal.setNombreSucursal(sucursalDTO.getNombreSucursal());
+            sucursal.setEstado(sucursalDTO.getEstado());
+            sucursal.setCiudad(sucursalDTO.getCiudad());
+            sucursal.setActivo(sucursalDTO.getActivo());
+           
+
+            //Salvamos los valores actualizados
+            Sucursal  updateSucursal = sucursalRepository.save(sucursal);
+            
+            //Devolvemos el  DTO  de sucursal
+            SucursalDTO responseDTO = SucursalDTO.fromSucursal(updateSucursal);
+            return ResponseEntity.ok(responseDTO);
+        }
+        return ResponseEntity.notFound().build();
+     }
+
+
 
     //Endpoint para eliminar una empresa por ID
     @DeleteMapping("/{id}")

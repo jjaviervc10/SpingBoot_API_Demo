@@ -1,4 +1,8 @@
 {
     "java.configuration.updateBuildConfiguration": "interactive",
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    
+    "spring-boot.ls.java.home" : "C:\\Program Files\\Java\\jdk-22"
+
+
 }

@@ -25,20 +25,17 @@ public class EmpresaController {
     // Endpoint para obtener todas las empresas
     //@CrossOrigin(origins = "http://localhost:8081") 
    @CrossOrigin(origins = "http://localhost:4200/")
-   /*  @GetMapping
-    public List<Empresa> getAllEmpresas() {
-        return empresaRepository.findAll();
-    }*/
+ 
 
-        @GetMapping
-public List<EmpresaDTO> getAllEmpresas() {
-    List<Empresa> empresas = empresaRepository.findAll();
+    @GetMapping
+    public List<EmpresaDTO> getAllEmpresas() {
+        List<Empresa> empresas = empresaRepository.findAll();
 
     // Convertir la lista de entidades a lista de DTOs
     return empresas.stream()
                    .map(EmpresaDTO::fromEmpresa)
                    .collect(Collectors.toList());
-}
+    }
 
     // Endpoint para obtener una empresa por ID
     @GetMapping("/{id}")
@@ -47,7 +44,7 @@ public List<EmpresaDTO> getAllEmpresas() {
         return empresaOpt.map(empresa -> ResponseEntity.ok(EmpresaDTO.fromEmpresa(empresa)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-/*
+
  @PostMapping
 public ResponseEntity<Empresa> createEmpresa(@RequestBody EmpresaDTO empresaDTO) {
     // Crear una nueva entidad Empresa a partir del DTO
@@ -98,9 +95,9 @@ public ResponseEntity<Empresa> createEmpresa(@RequestBody EmpresaDTO empresaDTO)
      return ResponseEntity.status(HttpStatus.CREATED).body(savedEmpresa);
     }*/
     // Endpoint para actualizar una empresa existente
-    @CrossOrigin(origins = "http://localhost:8081") 
+    @CrossOrigin(origins = "http://localhost:9091") 
     @PutMapping("/{id}")
-    public ResponseEntity<Empresa> updateEmpresa(@PathVariable Integer id, @RequestBody EmpresaDTO empresaDTO) {
+    public ResponseEntity<EmpresaDTO> updateEmpresa(@PathVariable Integer id, @RequestBody EmpresaDTO empresaDTO) {
         Optional<Empresa> existingEmpresa = empresaRepository.findById(id);
         if (existingEmpresa.isPresent()) {
             Empresa empresa = existingEmpresa.get();
@@ -112,7 +109,10 @@ public ResponseEntity<Empresa> createEmpresa(@RequestBody EmpresaDTO empresaDTO)
              //Guardar empresa axtualizada
             Empresa updateEmpresa = empresaRepository.save(empresa);
 
-            return ResponseEntity.ok(updateEmpresa);
+            // Devuelve el DTO de la empresa
+             EmpresaDTO responseDTO = EmpresaDTO.fromEmpresa(updateEmpresa);
+            return ResponseEntity.ok(responseDTO);
+           // return ResponseEntity.ok(updateEmpresa);
         }
         return ResponseEntity.notFound().build();
     }

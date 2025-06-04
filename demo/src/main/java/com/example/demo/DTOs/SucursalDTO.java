@@ -10,16 +10,20 @@ public class SucursalDTO {
     private String ciudad;
     private String estado;
     private boolean activo;
+    private Date fechaAlta;
+    private Date fechaServidor;
     private UsuarioDTO usuarioDTO;//Creamos instancia DTO usuario
     private EmpresaDTO empresaDTO;
     private String nombreEmpresa;
     //Constructor
-    public SucursalDTO(Integer idSucursal,String nombreSucursal, String ciudad, String estado, boolean activo, UsuarioDTO usuarioDTO, EmpresaDTO empresaDTO){
+    public SucursalDTO(Integer idSucursal,String nombreSucursal, String ciudad, String estado, boolean activo, Date fechaAlta, Date fechaServidor, UsuarioDTO usuarioDTO, EmpresaDTO empresaDTO){
         this.idSucursal = idSucursal;
         this.nombreSucursal = nombreSucursal;
         this.ciudad = ciudad;
         this.activo = activo;
         this.estado = estado;
+        this.fechaAlta = fechaAlta;
+        this.fechaServidor = fechaServidor;
         this.nombreEmpresa = empresaDTO.getNombreEmpresa();
         this.usuarioDTO = usuarioDTO;
 
@@ -37,6 +41,8 @@ public class SucursalDTO {
             this.ciudad = sucursal.getCiudad();
             this.estado = sucursal.getEstado();
             this.activo = sucursal.getActivo();
+            this.fechaAlta  = sucursal.getFechaAlta();
+            this.fechaServidor = sucursal.getFechaServidor();
             
     
             // Convertir a DTO            // Mapeo de la relación con UsuarioDTO y EmpresaDTO
@@ -117,6 +123,21 @@ public class SucursalDTO {
         this.nombreEmpresa = nombreEmpresa;
     }
 
+    public void setFechaAlta(Date fechaAlta){
+        this.fechaAlta = fechaAlta;
+    }
+
+    public Date getFechaAlta(){
+        return fechaAlta;
+    }
+
+    public void setFechaServidor(Date fechaServidor){
+        this.fechaServidor = fechaServidor;
+    }
+
+    public Date getFechaServidor(){
+        return fechaServidor;
+    }
      // Método para crear un SucursalDTO a partir de una entidad Empresa
     public static SucursalDTO fromSucursal(Sucursal sucursal) {
       if (sucursal != null && sucursal.getUsuario() != null) {
@@ -129,6 +150,8 @@ public class SucursalDTO {
             sucursal.getCiudad(),
             sucursal.getEstado(),
             sucursal.getActivo(),
+            sucursal.getFechaAlta(),
+            sucursal.getFechaServidor(),
             usuarioDTO, // Incluir UsuarioDTO en lugar de Usuario
             empresaDTO
             );
