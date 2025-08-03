@@ -56,9 +56,10 @@ public class Perfil {
     private Date fechaServidor;
 
    @ManyToOne
-   @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario",nullable = false)
+ //  @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario",nullable = false)
+ @JoinColumn(name = "\"idUsuario\"", referencedColumnName = "\"idUsuario\"", nullable = false)
    @JsonManagedReference // Evita la recursividad aquí
-   private Usuario idUsuario;
+   private Usuario usuario;
 
    //Relacion muchos a muchos con SAcceso
    
@@ -135,11 +136,11 @@ public class Perfil {
                 }
             
                 public Usuario getUsuario() {
-                    return idUsuario;
+                    return usuario;
                 }
             
-                public void setUsuario(Usuario idUsuario) {
-                    this.idUsuario = idUsuario;
+                public void setUsuario(Usuario usuario) {
+                    this.usuario = usuario;
                 }
 
 }

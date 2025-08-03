@@ -57,9 +57,10 @@ public class Sucursal {
     private Empresa idEmpresa;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario",nullable = false)
+    //@JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario",nullable = false)
+    @JoinColumn(name = "\"idUsuario\"", referencedColumnName = "\"idUsuario\"", nullable = false)
     @JsonManagedReference // Evita la recursividad aquí
-    private Usuario idUsuario;  // Esta es la propiedad que debe existir en la entidad Empresa
+    private Usuario usuario;  // Esta es la propiedad que debe existir en la entidad Empresa
 
 
      public Sucursal(){}
@@ -150,11 +151,11 @@ public class Sucursal {
     }
 
     public Usuario getUsuario(){
-        return idUsuario;
+        return usuario;
      }
  
-     public void setUsuario(Usuario idUsuario){
-         this.idUsuario = idUsuario;
+     public void setUsuario(Usuario usuario){
+         this.usuario = usuario;
      }
 
 }

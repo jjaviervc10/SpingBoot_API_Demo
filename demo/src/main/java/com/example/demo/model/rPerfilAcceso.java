@@ -26,12 +26,13 @@ public class rPerfilAcceso {
  @EmbeddedId
     private rPerfilAccesoId id;
 
-    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario", nullable = false)
+    //@JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario", nullable = false)
+    @JoinColumn(name = "\"idUsuario\"", referencedColumnName = "\"idUsuario\"", nullable = false)
     @ManyToOne
     //@JsonBackReference // Evita la recursividad aquí
     //@JsonManagedReference
    @JsonIgnore
-    private Usuario idUsuario;
+    private Usuario usuario;
 
     @Basic(optional = false)
     @NotNull
@@ -72,10 +73,10 @@ public void setFechaServidor(Date fechaServidor) {
 }
 
 public Usuario getUsuario(){
-    return idUsuario;
+    return usuario;
  }
 
- public void setUsuario(Usuario idUsuario){
-     this.idUsuario = idUsuario;
+ public void setUsuario(Usuario usuario){
+     this.usuario = usuario;
  }
 }

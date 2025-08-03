@@ -12,47 +12,47 @@ import jakarta.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name ="sUsuario")
+@Table(name = "\"sUsuario\"")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idUsuario")
+    @Column(name = "\"idUsuario\"")
     private Integer idUsuario;
     @Basic(optional = false)  
     @NotNull
     @Size(min = 1, max = 12)
-    @Column(name = "usuario")
+    @Column(name = "\"usuario\"")
     private String usuario;
     @Basic(optional = false)  
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "pass")
+    @Column(name = "\"pass\"")
     private String pass;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
-    @Column(name = "nombreCompleto")
+    @Column(name = "\"nombreCompleto\"")
     private String nombreCompleto;
     @Size(min = 0,max = 50)
-    @Column(name = "correo")
+    @Column(name = "\"correo\"")
     private String correo;
     @Size(min = 0, max = 10)
-    @Column(name = "telefono")
+    @Column(name = "\"telefono\"")
     private String telefono;
 
-    @OneToMany(mappedBy = "idUsuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     @JsonBackReference // Evita la recursividad aquí 
     private List<Empresa> empresas;
 
-    @OneToMany(mappedBy = "idUsuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     @JsonBackReference // Evita la recursividad aquí 
     private List<Sucursal> sucursales;
 
-    @OneToMany(mappedBy = "idUsuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     @JsonBackReference // Evita la recursividad aquí 
     private List<Perfil> perfiles;
 
-    @OneToMany(mappedBy = "idUsuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
    // @JsonManagedReference // Evita la recursión infinita en el otro lado de la relación
    @JsonBackReference // Evita la recursividad aquí
    //@JsonIgnore
